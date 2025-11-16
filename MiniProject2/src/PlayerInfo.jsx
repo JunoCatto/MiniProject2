@@ -1,39 +1,55 @@
+import { useState, useEffect } from "react";
 import { useData } from "./useData";
-import { usePlayer } from "./PlayerContext";
-import { use } from "react";
+import PlayerInput from "./PlayerInput";
+import LoadingCircle from "./LoadingCircle";
+import Box from "@mui/material/Box";
+import Grow from "@mui/material/Grow";
 
 export default function PlayerInfo() {
-  const { playerName } = usePlayer();
-  const url = playerName
-    ? `http://localhost:3000/hiscores/${playerName}`
-    : null;
-  const { data, isLoading, error } = useData(url);
-  console.log(data);
+  const { data, isLoading, error, fetchData } = useData();
+  const [playerName, setPlayerName] = useState("");
+
+  // Fetch only when playerName changes
+  useEffect(() => {
+    if (playerName) {
+      fetchData(`http://localhost:3000/hiscores/${playerName}`);
+    }
+  }, [playerName]);
 
   return (
     <>
-      <div>
-        <p>{isLoading ? "Loading..." : ""}</p>
-      </div>
-      <div id="playerName" className="card">
-        <span className="summaryTitle">Player Name:</span>
-        <p>{data?.name}</p>
-      </div>
-      <div className="summaryContainer">
-        <div id="overallLevel" className="card">
-          <span className="summaryTitle">Overall Level:</span>
-          <p>{data?.skills?.[0]?.level}</p>
-          {/* adding ? means that it will only show the data if it exists */}
+      {/* {!data && !isLoading && !error && ( */}
+      <PlayerInput invalid={!!error} onSubmit={setPlayerName} />
+      {/* )} */}
+      <>
+        <div className="loadingContainer">
+          {isLoading ? <LoadingCircle /> : ""}
         </div>
-        <div id="overallXp" className="card">
-          <span className="summaryTitle">Overall XP:</span>
-          <p>{data?.skills?.[0]?.xp}</p>
-        </div>
-        <div id="rank" className="card">
-          <span className="summaryTitle">Rank:</span>
-          <p>{data?.skills?.[0]?.rank}</p>
-        </div>
-      </div>
+      </>
+      {data && (
+        <Box sx={{ display: "flex" }}>
+          <Grow in={true} timeout={200}>
+            <div className="summaryContainer">
+              <div id="playerName" className="card">
+                <span className="summaryTitle">Player Name:</span>
+                <p>{data.name}</p>
+              </div>
+              <div id="overallLevel" className="card">
+                <span className="summaryTitle">Overall Level:</span>
+                <p>{data.skills?.[0]?.level}</p>
+              </div>
+              <div id="overallXp" className="card">
+                <span className="summaryTitle">Overall XP:</span>
+                <p>{data.skills?.[0]?.xp}</p>
+              </div>
+              <div id="rank" className="card">
+                <span className="summaryTitle">Rank:</span>
+                <p>{data.skills?.[0]?.rank}</p>
+              </div>
+            </div>
+          </Grow>
+        </Box>
+      )}
     </>
   );
 }

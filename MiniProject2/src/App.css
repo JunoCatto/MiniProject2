@@ -1,10 +1,12 @@
-@import "tailwindcss";
+@import '@fontsource/roboto/300.css';
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font: 300 1em 'Roboto', sans-serif;
+  scrollbar-gutter: both-edges;
 }
 
 .logo {
@@ -43,10 +45,20 @@
   color: #888;
 }
 
+.inputContainer {
+  width: 100%;
+}
+
 .summaryContainer {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .summaryTitle {
