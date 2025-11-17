@@ -21,7 +21,14 @@ export default function PlayerInput({ invalid, onSubmit }) {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+        sx={{
+          "& .MuiTextField-root": {
+            m: 1,
+            width: "50vw",
+            input: { color: "#cdd6f4" },
+            boxShadow: "0 1px 5px #000000",
+          },
+        }}
         noValidate
         autoComplete="off"
       >
