@@ -22,6 +22,7 @@ import {
   CircleSlash2,
   Footprints,
   Home,
+  Anchor,
 } from "lucide-react";
 
 export const iconMap = {
@@ -48,4 +49,5 @@ export const iconMap = {
   Runecraft: CircleSlash2,
   Hunter: Footprints,
   Construction: Home,
+  Sailing: Anchor,
 };

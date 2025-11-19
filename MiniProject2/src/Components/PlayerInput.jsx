@@ -8,10 +8,10 @@ export default function PlayerInput({ invalid, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!localPlayerName) return;
     onSubmit(localPlayerName);
   };
 
-  // ask about this? unsure if needed...
   useEffect(() => {
     setInternalError(invalid);
   }, [invalid]);
