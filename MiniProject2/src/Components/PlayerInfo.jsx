@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useData } from "./useData";
+import { useData } from "../useData";
 import PlayerInput from "./PlayerInput";
 import LoadingCircle from "./LoadingCircle";
 import Box from "@mui/material/Box";
 import Grow from "@mui/material/Grow";
 
-import { iconMap } from "./IconMap";
-import { DynamicIcon } from "lucide-react/dynamic";
+import { iconMap } from "../assets/IconMap";
 
 export default function PlayerInfo() {
   const { data, isLoading, error, fetchData } = useData();
