@@ -4,7 +4,7 @@ import PlayerInput from "./PlayerInput";
 import LoadingCircle from "./LoadingCircle";
 import Box from "@mui/material/Box";
 import Grow from "@mui/material/Grow";
-import { useNavigate, useParams, useLocation } from "react-router";
+import { useNavigate, useParams, useLocation, Link } from "react-router";
 
 import { iconMap } from "../assets/IconMap";
 
@@ -44,21 +44,25 @@ export default function PlayerInfo() {
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Grow in={true} timeout={200}>
             <div className="container summaryContainer">
-              {/* <div id="playerName" className="summaryCard">
-                <span className="summaryTitle">Player Name:</span>
-                <p>{data.name}</p>
-              </div> */}
               <div id="overallLevel" className="summaryCard">
                 <span className="summaryTitle">Overall Level:</span>
-                <p>{data.skills?.[0]?.level}</p>
+                <p>{data?.skills?.[0]?.level}</p>
+                <Link
+                  to={{
+                    pathname: `/${playerName.toLowerCase()}/activities`,
+                  }}
+                  state={data}
+                >
+                  {"bwaaaaah"}
+                </Link>
               </div>
               <div id="overallXp" className="summaryCard">
                 <span className="summaryTitle">Overall XP:</span>
-                <p>{data.skills?.[0]?.xp}</p>
+                <p>{data?.skills?.[0]?.xp}</p>
               </div>
               <div id="rank" className="summaryCard">
                 <span className="summaryTitle">Rank:</span>
-                <p>#{data.skills?.[0]?.rank}</p>
+                <p>#{data?.skills?.[0]?.rank}</p>
               </div>
             </div>
           </Grow>
