@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { useNavigate, useParams, useLocation, Link } from "react-router";
 import { useData } from "../useData";
 import PlayerInput from "./PlayerInput";
 import LoadingCircle from "./LoadingCircle";
 import Box from "@mui/material/Box";
 import Grow from "@mui/material/Grow";
-import { useNavigate, useParams, useLocation, Link } from "react-router";
 
 import { iconMap } from "../assets/IconMap";
+import { PlayerContext } from "../Context/PlayerContext";
 
 export default function PlayerInfo() {
   const { data, isLoading, error, fetchData } = useData();
+  const { player, setPlayer } = useContext(PlayerContext);
   const { playerName } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,11 +24,14 @@ export default function PlayerInfo() {
 
   // Fetch only when playerName changes
   useEffect(() => {
-    if (playerName) {
-      navigate(`/${playerName.toLowerCase()}/skills`);
+    if (!player || player.name !== playerName) {
+      setPlayer({ name: playerName });
       fetchData(`http://localhost:3000/hiscores/${playerName}`);
+      navigate(`/${playerName.toLowerCase()}/skills`);
     }
-  }, [playerName]);
+  }, [playerName, player]);
+
+  console.log(player);
 
   const handleSubmit = (inputName) => {
     navigate(`/${inputName.toLowerCase()}/skills`);
@@ -47,14 +52,6 @@ export default function PlayerInfo() {
               <div id="overallLevel" className="summaryCard">
                 <span className="summaryTitle">Overall Level:</span>
                 <p>{data?.skills?.[0]?.level}</p>
-                <Link
-                  to={{
-                    pathname: `/${playerName.toLowerCase()}/activities`,
-                  }}
-                  state={data}
-                >
-                  {"bwaaaaah"}
-                </Link>
               </div>
               <div id="overallXp" className="summaryCard">
                 <span className="summaryTitle">Overall XP:</span>
