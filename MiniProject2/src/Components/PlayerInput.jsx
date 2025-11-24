@@ -1,15 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { PlayerContext } from "../Context/PlayerContext";
 
 export default function PlayerInput({ invalid, onSubmit }) {
   const [localPlayerName, setLocalPlayerName] = useState("");
   const [internalError, setInternalError] = useState(false);
+  const { setPlayer } = useContext(PlayerContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!localPlayerName) return;
-    onSubmit(localPlayerName);
+    setPlayer((player) => ({
+      ...player,
+      name: localPlayerName,
+    }));
   };
 
   useEffect(() => {

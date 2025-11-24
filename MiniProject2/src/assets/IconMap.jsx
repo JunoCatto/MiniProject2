@@ -51,3 +51,5 @@ export const iconMap = {
   Construction: Home,
   Sailing: Anchor,
 };
+
+export const activityIcons = {};

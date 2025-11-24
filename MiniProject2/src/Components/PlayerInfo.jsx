@@ -1,6 +1,7 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router";
 import { useData } from "../useData";
+import TemporaryDrawer from "./Drawer";
 import PlayerInput from "./PlayerInput";
 import LoadingCircle from "./LoadingCircle";
 import Box from "@mui/material/Box";
@@ -24,48 +25,54 @@ export default function PlayerInfo() {
 
   // Fetch only when playerName changes
   useEffect(() => {
-    if (!player || player.name !== playerName) {
-      setPlayer({ name: playerName });
-      fetchData(`http://localhost:3000/hiscores/${playerName}`);
-      navigate(`/${playerName.toLowerCase()}/skills`);
+    const name = player?.name || playerName;
+    if (!name) return;
+    if (!player?.data || player.name !== name) {
+      fetchData(`http://localhost:3000/hiscores/${name}`);
     }
-  }, [playerName, player]);
+    if (player?.name) {
+      navigate(`/${name.toLowerCase()}/skills`);
+    }
+  }, [playerName, player?.name, player]);
 
-  console.log(player);
+  useEffect(() => {
+    if (data) {
+      setPlayer({ name: player?.name || playerName, data: data });
+    }
+  }, [data, player?.name, playerName, setPlayer]);
 
-  const handleSubmit = (inputName) => {
-    navigate(`/${inputName.toLowerCase()}/skills`);
-  };
+  const playerData = player?.data;
 
   return (
     <>
       <div style={{ display: isRoot ? "block" : "none" }}>
-        <PlayerInput invalid={!!error} onSubmit={handleSubmit} />
+        <PlayerInput invalid={!!error} />
       </div>
       <>
         <div className="loadingContainer">{isLoading && <LoadingCircle />}</div>
       </>
-      {data && !isLoading && (
+      {player && !isLoading && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <TemporaryDrawer />
           <Grow in={true} timeout={200}>
             <div className="container summaryContainer">
               <div id="overallLevel" className="summaryCard">
                 <span className="summaryTitle">Overall Level:</span>
-                <p>{data?.skills?.[0]?.level}</p>
+                <p>{playerData?.skills?.[0]?.level}</p>
               </div>
               <div id="overallXp" className="summaryCard">
                 <span className="summaryTitle">Overall XP:</span>
-                <p>{data?.skills?.[0]?.xp}</p>
+                <p>{playerData?.skills?.[0]?.xp}</p>
               </div>
               <div id="rank" className="summaryCard">
                 <span className="summaryTitle">Rank:</span>
-                <p>#{data?.skills?.[0]?.rank}</p>
+                <p>#{playerData?.skills?.[0]?.rank}</p>
               </div>
             </div>
           </Grow>
           <Grow in={true} timeout={200}>
             <div className="container skillContainer">
-              {data?.skills?.map((skill) =>
+              {playerData?.skills?.map((skill) =>
                 skill.name !== "Overall" ? (
                   <div className="skillCard" key={skill.name}>
                     <div className="skillTop">

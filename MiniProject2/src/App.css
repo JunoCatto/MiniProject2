@@ -150,3 +150,14 @@
   font-size: 1.2em;
   font-weight: bold;
 }
+
+.title {
+  position:static;
+  padding: 10px;
+}
+
+.drawer {
+  position: sticky;
+  top: -150px;
+  left: -45%;
+}
