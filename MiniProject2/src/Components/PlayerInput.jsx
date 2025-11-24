@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { PlayerContext } from "../Context/PlayerContext";
 
-export default function PlayerInput({ invalid, onSubmit }) {
+export default function PlayerInput({ invalid }) {
   const [localPlayerName, setLocalPlayerName] = useState("");
   const [internalError, setInternalError] = useState(false);
   const { setPlayer } = useContext(PlayerContext);
@@ -43,7 +43,7 @@ export default function PlayerInput({ invalid, onSubmit }) {
           variant="filled"
           error={internalError && localPlayerName !== ""}
           helperText={
-            internalError && localPlayerName !== ""
+            internalError && localPlayerName.length > 0
               ? "No data found for this player"
               : ""
           }

@@ -30,7 +30,7 @@ export default function PlayerInfo() {
     if (!player?.data || player.name !== name) {
       fetchData(`http://localhost:3000/hiscores/${name}`);
     }
-    if (player?.name) {
+    if (player?.data && !error) {
       navigate(`/${name.toLowerCase()}/skills`);
     }
   }, [playerName, player?.name, player]);
@@ -51,7 +51,7 @@ export default function PlayerInfo() {
       <>
         <div className="loadingContainer">{isLoading && <LoadingCircle />}</div>
       </>
-      {player && !isLoading && (
+      {player.data && !isLoading && (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <TemporaryDrawer />
           <Grow in={true} timeout={200}>
