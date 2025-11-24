@@ -20,7 +20,7 @@ export default function PlayerActivities() {
     if (!player || player.name !== name) {
       fetchData(`http://localhost:3000/hiscores/${name}`);
     }
-  }, [name, player]);
+  }, [name, player, playerName]);
 
   useEffect(() => {
     if (data) {
