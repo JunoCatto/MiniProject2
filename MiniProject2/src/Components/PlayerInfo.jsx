@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router";
-import { useData } from "../useData";
+import { useData } from "../Hooks/useData";
 import TemporaryDrawer from "./Drawer";
 import PlayerInput from "./PlayerInput";
 import LoadingCircle from "./LoadingCircle";

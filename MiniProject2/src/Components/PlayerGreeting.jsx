@@ -5,7 +5,7 @@ export default function PlayerGreeting() {
   const { player } = useContext(PlayerContext);
   return (
     <>
-      {player?.name && (
+      {player?.data && (
         <div>
           <span>Player: {player?.name}</span>
         </div>
