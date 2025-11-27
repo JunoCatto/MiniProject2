@@ -24,6 +24,7 @@ export function useData() {
 
   const fetchData = (url) => {
     if (!url) return;
+    if (state.isLoading) return;
 
     dispatch({ type: "FETCH_DATA" });
 

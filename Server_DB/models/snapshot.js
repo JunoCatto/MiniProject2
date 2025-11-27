@@ -16,10 +16,6 @@ const SnapshotSchema = new Schema({
     default: Date.now,
     immutable: true,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
 module.exports = Mongoose.model("Snapshot", SnapshotSchema);

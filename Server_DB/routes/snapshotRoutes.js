@@ -11,4 +11,8 @@ router.post("/", (req, res) => {
   console.log(`Snapshot of user: ${req.body.username} created`);
 });
 
+router.delete("/:username/:snapshotId", (req, res) => {
+  Controllers.snapshotController.deleteSnapshot(req, res);
+});
+
 module.exports = router;
