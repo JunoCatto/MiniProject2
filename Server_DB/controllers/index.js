@@ -1,6 +1,5 @@
-const snapshot = require("../models/snapshot");
+"use strict";
 
 module.exports = {
-  playerController: require("./playerController"),
   snapshotController: require("./snapshotController"),
 };
