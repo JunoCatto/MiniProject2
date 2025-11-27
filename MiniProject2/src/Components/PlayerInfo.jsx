@@ -28,7 +28,7 @@ export default function PlayerInfo() {
     const name = player?.name || playerName;
     if (!name) return;
     if (!player?.data || player.name !== name) {
-      fetchData(`http://localhost:3000/hiscores/${name}`);
+      fetchData(`http://localhost:3000/api/hiscores/${name}`);
     }
     if (player?.data && !error) {
       navigate(`/${name.toLowerCase()}/skills`);
