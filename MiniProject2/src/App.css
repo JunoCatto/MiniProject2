@@ -57,12 +57,19 @@
   overflow: hidden;
 }
 
+.playerGreeting {
+  font-size: 1.5em;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  padding: 2.5vw;
+}
+
 .summaryContainer {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   align-items: stretch;
-
 }
 
 .loadingContainer {
@@ -157,7 +164,7 @@
 }
 
 .drawer {
-  position: sticky;
+  position: absolute;
   top: -150px;
   left: -45%;
 }

@@ -22,12 +22,6 @@ const createSnapshot = async (username, skills) => {
 
   const snapshots = await Models.Snapshot.find({ username });
   const snapshotCount = snapshots.length;
-  console.log(
-    "There is currently",
-    snapshotCount,
-    "snapshots for user:",
-    username
-  );
 
   if (snapshotCount > 10) {
     const extraSnapshots = snapshotCount - 10;
@@ -36,15 +30,36 @@ const createSnapshot = async (username, skills) => {
     })
       .sort({ createdAt: 1 })
       .limit(extraSnapshots);
+
     // Deletes the oldest snapshots
     const idsToDelete = oldestSnapshots.map((snapshot) => snapshot._id); // Get the ids of the oldest snapshots
     await Models.Snapshot.deleteMany({ _id: { $in: idsToDelete } });
     console.log(
       `Snapshots limit reached, ${extraSnapshots} old snapshot(s) deleted`
     );
+    const snapshotsAfter = await Models.Snapshot.find({ username });
+    console.log(
+      "There is currently",
+      snapshotsAfter.length,
+      "snapshots for user:",
+      username
+    );
   }
-
   return snaps;
+};
+
+const updateSnapshot = async (req, res) => {
+  const snapshot = await Models.Snapshot.findOne({
+    username: req.params.username,
+    _id: req.params.snapshotId,
+  });
+  if (!snapshot) {
+    res.status(404).send("Snapshot not found");
+  } else {
+    snapshot.skills = req.body.skills;
+    await snapshot.save();
+    res.status(200).send("Snapshot updated");
+  }
 };
 
 const deleteSnapshot = async (req, res) => {
@@ -63,5 +78,6 @@ const deleteSnapshot = async (req, res) => {
 module.exports = {
   getSnapshot,
   createSnapshot,
+  updateSnapshot,
   deleteSnapshot,
 };

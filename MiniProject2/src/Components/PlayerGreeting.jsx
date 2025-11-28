@@ -7,7 +7,7 @@ export default function PlayerGreeting() {
     <>
       {player?.data && (
         <div>
-          <span>Player: {player?.name}</span>
+          <span className="playerGreeting">Player: {player?.name}</span>
         </div>
       )}
     </>

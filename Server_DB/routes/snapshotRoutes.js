@@ -11,6 +11,10 @@ router.post("/", (req, res) => {
   console.log(`Snapshot of user: ${req.body.username} created`);
 });
 
+router.put("/:username/:snapshotId", (req, res) => {
+  Controllers.snapshotController.updateSnapshot(req, res);
+});
+
 router.delete("/:username/:snapshotId", (req, res) => {
   Controllers.snapshotController.deleteSnapshot(req, res);
 });
