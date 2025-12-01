@@ -3,7 +3,7 @@ let router = express.Router();
 const fetch = require("node-fetch");
 const Controller = require("../controllers");
 
-router.get("/:username", async (req, res) => {
+router.post("/:username", async (req, res) => {
   const playerName = req.params.username;
   const url = `https://secure.runescape.com/m=hiscore_oldschool/index_lite.json?player=${playerName}`;
 
